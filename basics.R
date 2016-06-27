@@ -20,3 +20,6 @@ rdp <- function(n, alpha=1, H=rnorm, k=1000, ...) {
 
     return(G)
 }
+
+X <- rdp(1000, mean=5, sd=20)
+plot(density(X))
