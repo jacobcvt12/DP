@@ -1,5 +1,14 @@
-# make n draws from G ~ DP(alpha, H)
-# where alpha is [0.05, 0.5, 1] and H ~ Normal(0, 1)
+#' Take n draws from G ~ DP(alpha, H)
+#'
+#' @examples
+#'     X1 <- rdp(1000, mean=4, sd=20)
+#'     X2 <- rdp(1000, H=rbeta, shape1=2, shape2=2)
+#' @param n number of draws from Dirichlet Process
+#' @param alpha precision parameter
+#' @param H baseline distribution
+#' @param k number of stick breaks and draws from baseline distribution
+#' @param ... named parameters passed to baseline distribution
+#' @return A vector of draws from DP
 rdp <- function(n, alpha=1, H=rnorm, k=1000, ...) {
 
     # beta_k ~ Beta(1, alpha)
