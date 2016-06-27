@@ -29,3 +29,33 @@ rdp <- function(n, alpha=1, H=rnorm, k=1000, ...) {
 
     return(G)
 }
+
+# compare alpha parameters
+set.seed(90210)
+n <- 10000
+G.0 <- rbeta(n, 2, 2)
+Y1 <- rdp(n, alpha=0.01, H=rbeta, shape1=2, shape2=2)
+Y2 <- rdp(n, alpha=0.05, H=rbeta, shape1=2, shape2=2)
+Y3 <- rdp(n, alpha=0.5, H=rbeta, shape1=2, shape2=2)
+Y4 <- rdp(n, alpha=1, H=rbeta, shape1=2, shape2=2)
+Y5 <- rdp(n, alpha=10, H=rbeta, shape1=2, shape2=2)
+Y6 <- rdp(n, alpha=100, H=rbeta, shape1=2, shape2=2)
+Y7 <- rdp(n, alpha=1000, H=rbeta, shape1=2, shape2=2)
+Y8 <- rdp(n, alpha=10000, H=rbeta, shape1=2, shape2=2)
+
+library(ggplot2)
+theme_set(theme_classic())
+
+data <- rbind(data.frame(Y=G.0, what="baseline"),
+              data.frame(Y=Y1, what="alpha=0.01"),
+              data.frame(Y=Y2, what="alpha=0.05"),
+              data.frame(Y=Y3, what="alpha=0.5"),
+              data.frame(Y=Y4, what="alpha=1"),
+              data.frame(Y=Y5, what="alpha=10"),
+              data.frame(Y=Y6, what="alpha=100"),
+              data.frame(Y=Y7, what="alpha=1000"),
+              data.frame(Y=Y8, what="alpha=10000"))
+
+ggplot(data, aes(Y)) +
+    geom_density() +
+    facet_wrap(~what)
