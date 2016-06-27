@@ -2,8 +2,13 @@
 # where alpha is [0.05, 0.5, 1] and H ~ Normal(0, 1)
 n <- 500
 
-dp <- function(n, alpha=1, H=rnorm, k=100, ...) {
+dp <- function(n, alpha=1, H="normal", k=100, ...) {
     G <- numeric(n)
+
+    .dens <- list("normal"=list("r"=rnorm,
+                                "d"=dnorm),
+                  "t"=list("r"=rt,
+                           "d"=dt))
 
     for (i in 1:n) {
         # beta_k ~ Beta(1, alpha)
