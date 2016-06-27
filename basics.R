@@ -21,9 +21,11 @@ dp <- function(n, alpha=1, H="normal", k=100, ...) {
             pi.k[j] <- beta.k[j] * prod(1-beta.k[1:(j-1)])
         }
 
-        theta.star.k <- H(k, ...)
+        # theta_k^* ~ H
+        theta.star.k <- .dens[[H]][["r"]](k, ...)
 
-        G[i] <- sum(pi.k * theta.star.k)
+        # G = sum_1^{infty} pi_k delta_{theta_k^*}
+        G[i] <- sum(pi.k * .dens[[H]][["d"]](theta.star.k, ...))
     }
 
     return(G)
